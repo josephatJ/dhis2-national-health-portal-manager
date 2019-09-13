@@ -1,3 +1,70 @@
-<div style="margin-top: 70px">
-  <h1 style="font-size: 60px; text-align: center">Welcome to HISP TANZANIA SEED APP</h1>
+<div>
+  <app-nav-bar [navList]="navList"></app-nav-bar>
+</div>
+<div style="margin-top: 5px;" class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Portal header</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Portal header</h6>
+          <p class="card-text">
+            Manage the header here.
+          </p>
+          <a href="#" class="card-link">Go</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Manage Slider</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Managing portal slider</h6>
+          <p class="card-text">
+            The contents of the slider can be managed here.
+          </p>
+          <a href="#" class="card-link">Go</a>
+          <a href="#" class="card-link">Publish new</a>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-md-3"
+      *ngIf="
+        (pages$ | async) && (pages$ | async)[0] && (pages$ | async)[0]['id']
+      "
+    >
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Publish Page</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Publish page on portal</h6>
+          <p class="card-text">
+            You can publish the page for your program here.
+          </p>
+          <a
+            routerLink="/publish-page/{{ (pages$ | async)[0].id }}/edit"
+            class="card-link"
+            >View pages</a
+          >
+          <a routerLink="/publish-page/new-page/publish" class="card-link"
+            >Publish new</a
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Updates</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Manager updates</h6>
+          <p class="card-text">
+            You can publish updates/news and manage the current and hot
+            updates/news.
+          </p>
+          <a href="#" class="card-link">Go</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
 </div>

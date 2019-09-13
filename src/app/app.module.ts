@@ -1,49 +1,64 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
-import { AppComponent } from './app.component';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
+import { AppComponent } from "./app.component";
+import { StoreModule } from "@ngrx/store";
+import { EffectsModule } from "@ngrx/effects";
 
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment';
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { environment } from "../environments/environment";
 
-import { reducers, metaReducers } from './store/reducers';
-import { effects } from './store/effects';
+import { reducers, metaReducers } from "./store/reducers";
+import { effects } from "./store/effects";
 
 import {
   RouterStateSerializer,
   StoreRouterConnectingModule
-} from '@ngrx/router-store';
-import { RouteSerializer, CoreModule } from './core';
-import { RoutingModule } from './app.routes';
+} from "@ngrx/router-store";
+import { RouteSerializer, CoreModule } from "./core";
+import { RoutingModule } from "./app.routes";
 
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { HttpClientModule, HttpClient } from "@angular/common/http";
 
-import { NgxDhis2MenuModule } from '@iapps/ngx-dhis2-menu';
-import * as fromPages from './pages';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { NgxDhis2MenuModule } from "@iapps/ngx-dhis2-menu";
+import * as fromPages from "./pages";
+import { ServiceWorkerModule } from "@angular/service-worker";
+
+import { NgxTinymceModule } from "ngx-tinymce";
+import { FormsModule } from "@angular/forms";
+import { SharedModule } from "./shared/shared.module";
+import { NavBarComponent } from "./shared/components/nav-bar/nav-bar.component";
+import { EditorComponent } from "./shared/components/editor/editor.component";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }
 
 @NgModule({
-  declarations: [AppComponent, ...fromPages.pages],
+  declarations: [
+    AppComponent,
+    ...fromPages.pages,
+    NavBarComponent,
+    EditorComponent
+  ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     RoutingModule,
     CoreModule.forRoot({
-      namespace: 'iapps',
+      namespace: "iapps",
       version: 1,
       models: {
-        users: 'id'
+        users: "id"
       }
+    }),
+    NgxTinymceModule.forRoot({
+      baseURL: "./assets/tinymce/"
     }),
     BrowserAnimationsModule,
     StoreModule.forRoot(reducers, { metaReducers }),
@@ -71,7 +86,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
     !environment.production ? StoreDevtoolsModule.instrument() : [],
 
-    ServiceWorkerModule.register('ngsw-worker.js', {
+    ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production
     })
   ],

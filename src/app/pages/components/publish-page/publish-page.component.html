@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="col-md-12">
+    <div>
+      <app-nav-bar [navList]="navList"></app-nav-bar>
+    </div>
+    <div style="float: right">
+      <button class="btn" routerLink="/publish-page/new-page/publish">
+        New
+      </button>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <ul *ngIf="pages$ | async" class="list-group">
+      <li
+        *ngFor="let page of pages$ | async"
+        class="side-menu list-group-item"
+        routerLinkActive="active-side-menu"
+        routerLink="/publish-page/{{ page.id }}/edit"
+      >
+        {{ page.name }}
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-10 publish">
+    <div *ngIf="!isPreviewSet">
+      <div class="publish-page-form">
+        <label for="programName">Program name *</label>
+        <input
+          class="form-control"
+          name="programName"
+          [(ngModel)]="programName"
+        />
+      </div>
+      <div class="tiny-mce publish-page-form">
+        <label for="name">Program page</label>
+        <tinymce
+          [(ngModel)]="html"
+          [config]="tinmceConfigs"
+          id="tiny-mce-editor"
+        ></tinymce>
+        <!-- <input id="tiny-mce-editor" class="form-control" [(ngModel)]="html" /> -->
+      </div>
+      <div class="publish-page-form">
+        <button
+          *ngIf="!isEditModeSet"
+          class="btn btn-custom"
+          (click)="publish()"
+        >
+          Publish
+        </button>
+        <button
+          *ngIf="isEditModeSet"
+          class="btn btn-custom"
+          (click)="publish()"
+        >
+          Save
+        </button>
+        <button
+          class="btn btn-custom"
+          (click)="preview()"
+          *ngIf="!isPreviewSet"
+        >
+          Preview
+        </button>
+      </div>
+    </div>
+    <div class="preview" *ngIf="isPreviewSet">
+      <div [innerHtml]="html"></div>
+      <button class="btn btn-success" (click)="preview()" *ngIf="isPreviewSet">
+        Go to edit
+      </button>
+    </div>
+  </div>
+</div>
